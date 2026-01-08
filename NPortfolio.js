@@ -19,14 +19,11 @@ const navItems = document.querySelectorAll(".nav-link");                // Selec
 const icon = document.getElementById("icon");
 
 hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-    icon.classList.toggle("fa-bars");
-    icon.classList.toggle("fa-xmark");
+  const isOpen = navLinks.classList.toggle("active");
+    icon.classList.toggle("fa-bars", !isOpen);
+    icon.classList.toggle("fa-xmark", isOpen);
 
-    hamburger.setAttribute(
-      "aria-expanded", 
-      navLinks.classList.contains("active")
-    );
+    hamburger.setAttribute("aria-expanded", isOpen);
 });
 
 navItems.forEach(link => {
