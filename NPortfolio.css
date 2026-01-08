@@ -178,10 +178,22 @@ body {
 
 }
 
-/* Show a visible outline when a link or button is focused via keyboard */
+/* Show a visible border when a link or button is focused via keyboard */
 a:focus-visible, button:focus-visible {
-  outline: 2px solid crimson;   /* bright, high contrast */
-  outline-offset: 4px;          /* separate the outline from the element */
+  outline: none;
+  color: crimson;
+  border-bottom: 2px solid crimson;   /* bright, high contrast */
+  /*outline-offset: 4px;*/          /* separate the outline from the element */
+  transition: border-bottom 0.6s ease;
+}
+
+/* All your regular styles above */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 .section {
