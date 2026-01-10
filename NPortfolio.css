@@ -187,15 +187,6 @@ a:focus-visible, button:focus-visible {
   transition: border-bottom 0.6s ease;
 }
 
-/* All your regular styles above */
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
 .section {
   opacity: 0;
   transform: translate(40px);
