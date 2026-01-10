@@ -20,10 +20,10 @@ const icon = document.getElementById("icon");
 
 hamburger.addEventListener("click", () => {
   const isOpen = navLinks.classList.toggle("active");
+    hamburger.setAttribute("aria-expanded", isOpen);
+  
     icon.classList.toggle("fa-bars", !isOpen);
     icon.classList.toggle("fa-xmark", isOpen);
-
-    hamburger.setAttribute("aria-expanded", isOpen);
 });
 
 navItems.forEach(link => {

@@ -13,12 +13,13 @@ body {
 }
 
 .loader {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: black;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,12 +111,12 @@ body {
 }
 
 .hamburger {
+    display: none;  /* show later for mobile */
     background: none;
     border: none;
     color: white;
     font-size: 20px;
     cursor: pointer;
-    display: none;  /* show later for mobile */
 }
 
 @media (max-width: 768px) {
@@ -149,7 +150,7 @@ body {
 
      .nav-links.active {
         display: flex;
-        max-height: 500px;       /* large enough to fit all links */
+        max-height: auto;       /* large enough to fit all links */
     }
 
     .nav-links.active li {
@@ -166,15 +167,15 @@ body {
 
 /* Show a visible border when a link or button is focused via keyboard */
 a:focus-visible, button:focus-visible {
-  outline: none;
-  color: crimson;
+  outline: crimson auto 2px;  /* bright, high contrast */
+  outline-offset: 2px;
   border-bottom: 2px solid crimson;   /* bright, high contrast */
   transition: border-bottom 0.6s ease;
 }
 
 .section {
   opacity: 0;
-  transform: translate(40px);
+  transform: translateX(40px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
