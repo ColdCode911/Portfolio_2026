@@ -208,3 +208,11 @@ a:focus-visible, button:focus-visible {
   transform: translate(0);
 }
 
+/* All your regular styles above */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
