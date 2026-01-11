@@ -18,21 +18,19 @@ const navLinks = document.getElementById("nav-links");
 const navItems = document.querySelectorAll(".nav-link");                // Select all nav links
 const icon = document.getElementById("icon");
 
-hamburger.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("active");
-    hamburger.setAttribute("aria-expanded", isOpen);
+function toggleMenu(forceClose = false) {
+  const isOpen = forceClose ? false : !navLinks.classList.contains("active");
   
-    icon.classList.toggle("fa-bars", !isOpen);
-    icon.classList.toggle("fa-xmark", isOpen);
-});
+  navLinks.classList.toggle("active", isOpen);
+  hamburger.setAttribute("aria-expanded", isOpen);
+  icon.classList.toggle("fa-bars", !isOpen);
+  icon.classList.toggle("fa-xmark", isOpen);
+}
+
+hamburger.addEventListener("click", () => toggleMenu());
 
 navItems.forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("active");
-    icon.classList.add("fa-bars");
-    icon.classList.remove("fa-xmark");
-    hamburger.setAttribute("aria-expanded", navLinks.classList.contains("active"));
-  });
+  link.addEventListener("click", () => toggleMenu(true) ); // Force close the menu on link click
 });
 
 const sections = document.querySelectorAll("section");
@@ -49,11 +47,7 @@ window.addEventListener("scroll", () => {
       currentSection = section.getAttribute("id");
 
       navLinksAll.forEach(link => {
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === `#${currentSection}`) {
-          link.classList.add("active");
-        }
+        link.classList.toggle("active", link.getAttribute("href") === `#${currentSection}`);
       });
     }
   });
