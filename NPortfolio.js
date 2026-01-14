@@ -36,23 +36,26 @@ navItems.forEach(link => {
 const sections = document.querySelectorAll("section");
 const navLinksAll = document.querySelectorAll(".nav-link");
 
-window.addEventListener("scroll", () => {
-  let currentSection = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 60;
-    const sectionHeight = section.offsetHeight;
-
-    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-      currentSection = section.getAttribute("id");
-
-      navLinksAll.forEach(link => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${currentSection}`);
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEash(entry => {
+    if(entry.isIntersecting) {
+      navLinksAll.forEach(link  => {
+        link.classList.toggle(
+          "active",
+          link.getAttribute("href") === `#${entry.target.id}`
+        )
       });
     }
   });
+},
+{
+  rootMargin: "-60px 0px -40% 0px", // Adjust based on header height
+}
+);
 
-const sectors = document.querySelectorAll(".section");
+sections.forEach(section => {
+  sectionObserver.observe(section);
+});
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -71,7 +74,5 @@ const observer = new IntersectionObserver(
     sectors.forEach((sector) => {
       observer.observe(sector);
     });
-  }
-);
 
 
