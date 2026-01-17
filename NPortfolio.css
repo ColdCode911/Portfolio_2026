@@ -30,12 +30,28 @@ body::before {
     ),
     url("background.png");  /* replace with your image path */
 
-  background-size: cover;   /* fills viewport without distortion */
-  background-position: center bottom;
+/* CHANGE THIS: 100% width, auto height ensures it starts at the top 
+     and scales proportionally without zooming in too much */
+  background-size: 100% auto;
+
+  /* This ensures it stays at the top. 
+     If you want the laptop at the bottom, use 'center bottom' */
+  background-position: center top;
+  
   background-repeat: no-repeat;
+  background-attachment: fixed; /* Keeps it from scrolling with the page */
 
   z-index: -1;              /* stays behind all content */
   pointer-events: none;     /* prevents clicks/select issues */
+}
+
+@media (max-width: 768px) {
+    body::before {
+        /* On mobile, we switch to 'cover' or a larger percentage 
+           so the code/laptop fills the background better */
+        background-size: cover; 
+        background-position: center center;
+    }
 }
 
 .loader {
@@ -81,12 +97,13 @@ body::before {
 }
 
 #header {
-    position: fixed;        /* stays at the top when scrolling */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50px;           /* you can change to 40px if you want */
-    background-color: black;
+    height: 50px;
+    /* CHANGE THIS: Semi-transparent so the background shows through */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
     z-index: 1000;
 }
 
@@ -213,9 +230,11 @@ a:focus-visible, button:focus-visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100svh; /* Modern fix for mobile browser bars */
   text-align: center;
   gap: 20px;
+  padding: 0 20px; /* Prevents text from hitting the screen edges */
 }
 
 #hero h1 {
@@ -239,6 +258,25 @@ a:focus-visible, button:focus-visible {
 
 .cta-button:hover {
   transform: scale(1.05);
+}
+
+/* Styling the individual skill card */
+.skill {
+    background: rgba(255, 255, 255, 0.05); /* Very transparent white */
+    backdrop-filter: blur(10px);           /* The "frosted" glass effect */
+    -webkit-backdrop-filter: blur(10px);   /* Support for Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.skill:hover {
+    background: rgba(220, 20, 60, 0.1);    /* Slight crimson tint on hover */
+    border: 1px solid crimson;             /* Match your theme color */
+    transform: translateY(-5px);           /* Lift up slightly */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 #skills h2 {
