@@ -6,36 +6,56 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Reset + base layout */
 body {
-  background-color: black;
+  margin: 0;
+  min-height: 100vh;
   color: white;
+  background-color: black;
+
+  position: relative;       /* anchor for pseudo-element */
   overflow-x: hidden;
 }
 
+/* Background image + overlay layer */
+body::before {
+  content: "";              /* required to render pseudo-element */
+  position: fixed;          /* locks to viewport */
+  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0)
+    ),
+    url("background.png");  /* replace with your image path */
+
+  background-size: cover;   /* fills viewport without distortion */
+  background-position: center bottom;
+  background-repeat: no-repeat;
+
+  z-index: -1;              /* stays behind all content */
+  pointer-events: none;     /* prevents clicks/select issues */
+}
+
 .loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
   background-color: black;
 
   display: flex;
+  flex-direction: column;      /* STACK vertically */
   justify-content: center;
   align-items: center;
+
+  gap: 16px;                   /* space between spinner & text */
   z-index: 9999;
   transition: opacity 1s ease;
 }
 
 .spinner {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 60px;
   height: 60px;
-  color: black;
-  /*border: 8px solid #f3f3f3;*/
   border-top: 3px solid crimson;
   border-radius: 50%;
   animation: spin 2s linear infinite;
@@ -51,14 +71,8 @@ body {
 }
 
 .loader-text {
-  position: fixed;
-  top: 60%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-family: 'Arial', sans-serif;
   font-size: 1.2rem;
-  margin-top: 20px;
+  color: white;
 }
 
 .page-content {
@@ -192,4 +206,61 @@ a:focus-visible, button:focus-visible {
     animation: none !important;
     transition: none !important;
   }
+}
+
+#hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  gap: 20px;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  color: crimson;
+}
+
+#hero p {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.cta-button {
+  padding: 10px 25px;
+  background-color: crimson;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+}
+
+#skills h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: crimson;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.skill i {
+  font-size: 3rem;
+  color: crimson;
+}
+
+.skill p {
+  margin-top: 10px;
+  font-size: 1rem;
 }

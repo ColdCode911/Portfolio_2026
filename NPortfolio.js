@@ -8,6 +8,10 @@ window.addEventListener('load', function() {
       setTimeout(() => {
         loader.style.display = 'none';
         pageContent.style.opacity = "1";  // Fade in the page content
+
+        // START observers ONLY after content is visible
+        startSectionObservers();
+
       }, 600);
 
     }, 1500);                               // Adjust the timeout duration to 2.5s
@@ -33,46 +37,64 @@ navItems.forEach(link => {
   link.addEventListener("click", () => toggleMenu(true) ); // Force close the menu on link click
 });
 
+function startSectionObservers() {
+
+  /* =====================
+   SECTION REVEAL (ANIMATION)
+===================== */
+const revealSections = document.querySelectorAll(".section");
+
+const revealObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      entry.target.classList.add("show");
+      revealObserver.unobserve(entry.target); // reveal once
+    });
+  },
+  {
+    threshold: 0.1,           // forgiving
+    rootMargin: "0px 0px -10% 0px",
+  }
+);
+
+revealSections.forEach(section => {
+  revealObserver.observe(section);
+});
+
+
+/* =====================
+   NAV ACTIVE LINK TRACKING
+===================== */
 const sections = document.querySelectorAll("section");
 const navLinksAll = document.querySelectorAll(".nav-link");
 
-const sectionObserver = new IntersectionObserver(entries => {
-  entries.forEash(entry => {
-    if(entry.isIntersecting) {
-      navLinksAll.forEach(link  => {
+const navObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const currentId = entry.target.id;
+
+      navLinksAll.forEach(link => {
         link.classList.toggle(
           "active",
-          link.getAttribute("href") === `#${entry.target.id}`
-        )
+          link.getAttribute("href") === `#${currentId}`
+        );
       });
-    }
-  });
-},
-{
-  rootMargin: "-60px 0px -40% 0px", // Adjust based on header height
-}
+    });
+  },
+  {
+    rootMargin: "-60px 0px -50% 0px", // accounts for fixed header
+    threshold: 0,
+  }
 );
 
 sections.forEach(section => {
-  sectionObserver.observe(section);
+  navObserver.observe(section);
 });
+}
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        observer.unobserve(entry.target);  // Stop observing once shown
-      }
-    });
-  },
-    {
-      threshold: 0.2,
-    }
-);
-
-    sectors.forEach((sector) => {
-      observer.observe(sector);
-    });
 
 
