@@ -1,3 +1,5 @@
+alert('Hello! Welcome to my portfolio website. Feel free to explore and reach out if you have any questions or opportunities to discuss!');
+
 window.addEventListener('load', () => {
     const loader = document.querySelector('.loader');
     const pageContent = document.querySelector('.page-content');
